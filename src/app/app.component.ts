@@ -36,12 +36,19 @@ import {layoutPaths} from './theme/theme.constants';
     component: Pages,
     useAsDefault: true
   },
+  // handle any non-registered route
+  // and simply redirects back to dashboard page
+  // you can specify any customer 404 page while it's not built in ito ng2-admin
+  {
+    path: '/**',
+    redirectTo: ['Pages']
+  }
 ])
 export class App {
 
   isMenuCollapsed:boolean = false;
 
-  constructor(private _state:AppState, private _imageLoader:BaImageLoaderService, private _spinner:BaThemeSpinner) {
+  constructor(private _state:AppState, private _imageLoader:BaImageLoaderService, private _spinner:BaThemeSpinner, private _config:BaThemeConfig) {
     this._loadImages();
 
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
